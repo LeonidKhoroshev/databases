@@ -78,12 +78,30 @@ rabbitmq-plugins enable rabbitmq_management
 $ pip install pika
 ```
 
-Зайдите в веб-интерфейс, найдите очередь под названием hello и сделайте скриншот.
-После чего запустите второй скрипт consumer.py и сделайте скриншот результата выполнения скрипта
+На нашей виртуальной машине уже установлен pyhton версии 3.9 при выполнении прошлых заданий.
 
-*В качестве решения домашнего задания приложите оба скриншота, сделанных на этапе выполнения.*
+Создаем папку rabbit, в которую помещаем прилагаемые к заданию скрипты
 
-Для закрепления материала можете попробовать модифицировать скрипты, чтобы поменять название очереди и отправляемое сообщение.
+```
+mkdir rabbit
+cd rabbit
+```
+
+В скрипте producer.py меняем localhost на нашу виртуальную машину test (строка 5)
+
+```
+#!/usr/bin/env python
+# coding=utf-8
+import pika
+
+connection = pika.BlockingConnection(pika.ConnectionParameters('test'))
+channel = connection.channel()
+channel.queue_declare(queue='hello')
+channel.basic_publish(exchange='', routing_key='hello', body='Hello Netology!')
+connection.close()
+```
+
+В скрипте consumer.py проводим аналогичные изменения, а также добавляем возможность авторизации, что необходимо во всегда, кроме запуска rabbit в localhost
 
 ---
 
