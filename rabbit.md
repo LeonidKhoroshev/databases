@@ -56,7 +56,13 @@ rabbitmqctl set_permissions -p test leo ".*" ".*" ".*"
 rabbitmq-plugins enable rabbitmq_management
 ```
 
-*Итогом выполнения домашнего задания будет приложенный скриншот веб-интерфейса RabbitMQ.*
+Проверяем статус rabbit
+
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/rabbit/rabbit1.1.png)
+
+Скриншот интерфейса
+
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/rabbit/rabbit1.2.png)
 
 ---
 
