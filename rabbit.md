@@ -87,7 +87,12 @@ mkdir rabbit
 cd rabbit
 ```
 
-В скрипте producer.py меняем localhost на нашу виртуальную машину test (строка 5)
+В скрипте producer.py меняем:
+- имя нашей виртуальной машины на test (строка 5);
+- название очереди на my_queue (строка 7);
+- сообщение на Salut (строка 8).
+
+Первое изменение необходимо - чтобы все работало, так как в веб-интерфейс мы входим не с localhost, а остальные - "для закрепления материала".
 
 ```
 #!/usr/bin/env python
@@ -96,12 +101,13 @@ import pika
 
 connection = pika.BlockingConnection(pika.ConnectionParameters('test'))
 channel = connection.channel()
-channel.queue_declare(queue='hello')
-channel.basic_publish(exchange='', routing_key='hello', body='Hello Netology!')
+channel.queue_declare(queue='my_queue')
+channel.basic_publish(exchange='', routing_key='my_queue', body='Salut!')
 connection.close()
 ```
+Запускаем скрипт
 
-В скрипте consumer.py проводим аналогичные изменения, а также добавляем возможность авторизации, что необходимо во всегда, кроме запуска rabbit в localhost
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/rabbit/rabbit2.1.png)
 
 ---
 
