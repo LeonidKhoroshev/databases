@@ -109,6 +109,37 @@ connection.close()
 
 ![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/rabbit/rabbit2.1.png)
 
+Создадим скрипт comsumer.py
+
+Здесь изменения следующие:
+- добавлена авторизация по пользователю и паролю (строка 4);
+- изменено имя виртуальной машины на test (строка 5);
+- имя очереди на my_queue (строка 8);
+- полностью переписана строка 15, так как исходный вариант был не рабочий (unexpected argument) и заменен на показанный в лекции.
+  
+```
+#!/usr/bin/env python
+# coding=utf-8
+import pika
+credentials = pika.PlainCredentials('leo', 'leo')
+parameters = pika.ConnectionParameters('test', 5672, 'test', credentials)
+connection = pika.BlockingConnection(parameters)
+channel = connection.channel()
+channel.queue_declare(queue='my_queue')
+
+
+def callback(ch, method, properties, body):
+    print(" [x] Received %r" % body)
+
+channel.basic_consume(on_message_callback=callback, queue='my_queue', auto_ack=False)
+channel.start_consuming()
+
+```
+
+Скриншот с добавленным консьюмером
+
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/rabbit/rabbit2.2.png)
+
 ---
 
 ### Задание 3. Подготовка HA кластера
