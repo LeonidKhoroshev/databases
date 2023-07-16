@@ -1,0 +1,63 @@
+- name: RabbitMQ
+  hosts: all
+  become: true
+  gather_facts: true
+  vars:
+    rabbitmq_cluster_name: "khoroshevlv"
+    rabbitmq_policy: "ha-all"
+    rabbitmq_cookie: "cookie"
+
+  tasks:
+    - name: Erlang repo
+      apt_repository:
+        repo: "deb https://ppa1.novemberain.com/rabbitmq/rabbitmq-erlang/deb/debian bullsye main"
+        state: present
+
+    - name: Rabbit repo
+      apt_repository:
+        repo: "deb https://ppa1.novemberain.com/rabbitmq/rabbitmq-server/deb/debian bullseye main"
+        state: present
+
+    - name: Rabbit install
+      apt:
+        name: rabbitmq-server
+        state: latest
+        update_cache: yes
+
+    - name: Rabbit stop
+      service:
+        name: rabbitmq-server
+        state: stopped
+        enabled: false
+
+    - name: Add cookie
+      copy:
+        dest: "/var/lib/rabbitmq/.erlang.cookie"
+        content: "{{ rabbitmq_cookie }}"
+        mode: "0600"
+        owner: rabbitmq
+        group: rabbitmq
+
+    - name: Rabbit start
+      service:
+        name: rabbitmq-server
+        state: started
+        enabled: true
+
+    - name: Wait to start
+      wait_for:
+        port: 5672
+        timeout: 120
+
+    - name: Join the RabbitMQ cluster
+      shell: |
+        rabbitmqctl stop_app
+        rabbitmqctl reset
+        rabbitmqctl join_cluster {{ rabbitmq_cluster_name }}@{{ item }}
+        rabbitmqctl start_app
+      with_items: "{{ groups['rabbitmq']|reject('match', inventory_hostname)|join(',') }}"
+
+    - name: Set the policy
+      shell: |
+        rabbitmqctl set_policy {{ rabbitmq_policy }} "" '{"ha-mode":"all","ha-sync-mode":"automatic"}'
+
