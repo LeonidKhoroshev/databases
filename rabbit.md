@@ -249,6 +249,17 @@ chmod 777 rabbitmqadmin
 ## Дополнительные задания (со звёздочкой*)
 Эти задания дополнительные, то есть не обязательные к выполнению, и никак не повлияют на получение вами зачёта по этому домашнему заданию. Вы можете их выполнить, если хотите глубже шире разобраться в материале.
 
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/rabbit/rabbit3.11.png)
+
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/rabbit/rabbit3.12.png)
+
+Далее отключаем ноду slave и меняем в скрипте consumer.py хост обратно на test
+
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/rabbit/rabbit3.13.png)
+
+Запускаем
+
+
 ### * Задание 4. Ansible playbook
 
 Напишите плейбук, который будет производить установку RabbitMQ на любое количество нод и объединять их в кластер.
