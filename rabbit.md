@@ -245,7 +245,7 @@ chmod 777 rabbitmqadmin
 
 В скрипте consumer.py из Задания 2 изменим название хоста с test на slave и попробуем подключиться к очереди:
 
-![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/rabbit/rabbit3.10.png)
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/rabbit/rabbit3.14.png)
 
 ![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/rabbit/rabbit3.11.png)
 
