@@ -245,10 +245,6 @@ chmod 777 rabbitmqadmin
 
 В скрипте consumer.py из Задания 2 изменим название хоста с test на slave и попробуем подключиться к очереди:
 
-
-## Дополнительные задания (со звёздочкой*)
-Эти задания дополнительные, то есть не обязательные к выполнению, и никак не повлияют на получение вами зачёта по этому домашнему заданию. Вы можете их выполнить, если хотите глубже шире разобраться в материале.
-
 ![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/rabbit/rabbit3.11.png)
 
 ![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/rabbit/rabbit3.12.png)
@@ -259,7 +255,7 @@ chmod 777 rabbitmqadmin
 
 Запускаем
 
-
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/rabbit/rabbit3.13.png)
 ### * Задание 4. Ansible playbook
 
 Напишите плейбук, который будет производить установку RabbitMQ на любое количество нод и объединять их в кластер.
