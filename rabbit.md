@@ -173,8 +173,75 @@ $ rabbitmqadmin get queue='hello'
 
 После чего попробуйте отключить одну из нод, желательно ту, к которой подключались из скрипта, затем поправьте параметры подключения в скрипте consumer.py на вторую ноду и запустите его.
 
-*Приложите скриншот результата работы второго скрипта.*
+Создаем в Virtualbox вторую виртуальную машину и вносим соответствующие изменения в файл etc/hosts
 
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/rabbit/rabbit3.1.png)
+
+Далее объединяем обе виртуальные машины в кластер следующими действиями:
+
+На ноде slave прописываем политику ha-all (в целях возможности репликации очередей)
+
+```
+ rabbitmqctl set_policy ha-all "" '{"ha-mode":"all","ha-sync-mode":"automatic"}'
+```
+
+Далее проверяем на обоих нодах содержимое файла /var/lib/rabbitmq/.erlang.cookie (оно должно быть идентичным).
+В нашем случае обошлось без копирования, так как вторая нода была создана клонированием первой виртуальной машины в Virtualbox.
+
+Затем задаем права, а также владельца и группу на файл .erlang.cookie на обоих нодах
+
+```
+chmod 400 /var/lib/rabbitmq/.erlang.cookie && chown rabbitmq:rabbitmq /var/lib/rabbitmq/.erlang.cookie
+```
+
+Следующим действием создаем кластер из двух нод (изначально планировалось присоединить ноду slave к ноде test, но кластер "не взлетел", поэтому выбран вариант присоединения ноды test к slave)
+
+```
+rabbitmqctl stop_app
+rabbitmqctl join_cluster rabbit@slave
+rabbitmqctl start_app
+```
+
+Проверяем результат на обоих нодах
+
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/rabbit/rabbit3.2.png)
+
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/rabbit/rabbit3.3.png)
+
+Смотрим веб-нитерфейс по обоим адресам:
+
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/rabbit/rabbit3.4.png)
+
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/rabbit/rabbit3.5.png)
+
+Запускаем скрипт producer.py из задания №2, но команда $ rabbitmqadmin get queue='hello' не заработала ни на одной из нод.
+
+Загружаем скрипт и выдаем разрешения
+
+```
+wget https://raw.githubusercontent.com/rabbitmq/rabbitmq-management/v3.7.8/bin/rabbitmqadmin
+chmod 777 rabbitmqadmin
+```
+Так как используем python3, меняем первую строчку скрипта с
+
+```
+#!/usr/bin/env python
+```
+на
+
+```
+#!/usr/bin/env python3
+```
+
+Проверка в консоли
+
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/rabbit/rabbit3.8.png)
+
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/rabbit/rabbit3.9.png)
+
+Наша очередь в веб-интерфейсе:
+
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/rabbit/rabbit3.7.png)
 
 ## Дополнительные задания (со звёздочкой*)
 Эти задания дополнительные, то есть не обязательные к выполнению, и никак не повлияют на получение вами зачёта по этому домашнему заданию. Вы можете их выполнить, если хотите глубже шире разобраться в материале.
