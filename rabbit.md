@@ -265,5 +265,7 @@ chmod 777 rabbitmqadmin
 Напишите плейбук, который будет производить установку RabbitMQ на любое количество нод и объединять их в кластер.
 При этом будет автоматически создавать политику ha-all.
 
-*Готовый плейбук разместите в своём репозитории.*
+Ссылка на ansible playbook
+
+https://github.com/LeonidKhoroshev/databases/blob/main/rabbit/playbook.yml
 
