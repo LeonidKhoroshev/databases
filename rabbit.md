@@ -257,6 +257,9 @@ chmod 777 rabbitmqadmin
 
 ![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/rabbit/rabbit3.13.png)
 
+
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/rabbit/rabbit3.15.png)
+
 ### * Задание 4. Ansible playbook
 
 Напишите плейбук, который будет производить установку RabbitMQ на любое количество нод и объединять их в кластер.
