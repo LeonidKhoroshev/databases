@@ -42,7 +42,7 @@ CREATE USER 'sys_test'@'158.160.110.26' IDENTIFIED BY 'password';
 1.4. Дайте все права для пользователя sys_temp.
 
 ```
-GRANT ALL PRIVILEGES ON *.* TO 'sys_test'@'158.160.110.26'
+GRANT ALL PRIVILEGES ON *.* TO 'sys_test'@'158.160.110.26';
 ```
 
 1.5. Выполните запрос на получение списка прав для пользователя sys_temp. (скриншот)
