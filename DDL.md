@@ -24,7 +24,7 @@
 
 MySQL 8.0 database server поднят в виртуальной машине Alma Linux 8, развернутой в Яндекс облаке.
 
-```sql
+```
 dnf install epel-release
 dnf update
 dnf install -y mysql-server mysql
@@ -32,7 +32,7 @@ dnf install -y mysql-server mysql
 
 1.2. Создайте учётную запись sys_temp. 
 
-```
+```sql
 mysql -u root -p
 CREATE USER 'sys_temp'@'localhost' IDENTIFIED BY 'password';
 ```
@@ -41,8 +41,8 @@ CREATE USER 'sys_temp'@'localhost' IDENTIFIED BY 'password';
 
 1.4. Дайте все права для пользователя sys_temp.
 
-```
-GRANT ALL PRIVILEGES ON *.* TO 'sys_test'@'158.160.110.26';
+```sql
+GRANT ALL PRIVILEGES ON *.* TO 'sys_temp'@'158.160.110.26';
 ```
 
 1.5. Выполните запрос на получение списка прав для пользователя sys_temp. (скриншот)
@@ -53,10 +53,8 @@ GRANT ALL PRIVILEGES ON *.* TO 'sys_test'@'158.160.110.26';
 ```sql
 ALTER USER 'sys_temp'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
 ```
-На данном этапе обнаружена потребность в смене названия нашего пользователя и привязки его к locslhost и задаем примитивный пароль для входа
 
-```
-RENAME USER 'sys_test'@'158.160.110.26' TO 'sys_temp'@'localhost';
+```sql
 ALTER USER 'sys_temp'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
 SET PASSWORD FOR 'sys_temp'@'localhost' = '321';
 ```
