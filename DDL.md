@@ -24,7 +24,7 @@
 
 MySQL 8.0 database server поднят в виртуальной машине Alma Linux 8, развернутой в Яндекс облаке.
 
-```
+```sql
 dnf install epel-release
 dnf update
 dnf install -y mysql-server mysql
@@ -34,7 +34,7 @@ dnf install -y mysql-server mysql
 
 ```
 mysql -u root -p
-CREATE USER 'sys_test'@'158.160.110.26' IDENTIFIED BY 'password';
+CREATE USER 'sys_temp'@'localhost' IDENTIFIED BY 'password';
 ```
 
 1.3. Выполните запрос на получение списка пользователей в базе данных. (скриншот)
