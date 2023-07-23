@@ -44,7 +44,29 @@ SET PASSWORD FOR 'sys_temp'@'localhost' = '321';
 
 1.7. По ссылке https://downloads.mysql.com/docs/sakila-db.zip скачайте дамп базы данных.
 
+```
+wget https://downloads.mysql.com/docs/sakila-db.zip
+unzip sakila-db.zip
+rm sakila-db.zip
+```
+
 1.8. Восстановите дамп в базу данных.
+
+Создаем у себя на хосте базу данных sakila 
+
+```
+mysql -u root
+create database sakila;
+exit
+```
+
+Дамп в базу данных sakila
+
+```
+ mysqldump -u root -p sakila > sakila-data.sql
+```
+
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/DDL/DDL_DML1.5.png)
 
 1.9. При работе в IDE сформируйте ER-диаграмму получившейся базы данных. При работе в командной строке используйте команду для получения всех таблиц базы данных. (скриншот)
 
