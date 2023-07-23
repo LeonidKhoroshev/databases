@@ -54,7 +54,7 @@ rm sakila-db.zip
 
 Создаем у себя на хосте базу данных sakila 
 
-```
+```sql
 mysql -u root
 create database sakila;
 exit
