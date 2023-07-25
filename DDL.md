@@ -63,7 +63,9 @@ exit
 Дамп в базу данных sakila
 
 ```
- mysqldump -u root -p sakila > sakila-data.sql
+mysql < sakila-schema.sql
+mysql < sakila-data.sql
+mysqldump -u root -p sakila > sakila-data.sql
 ```
 
 ![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/DDL/DDL_DML1.5.png)
