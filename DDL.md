@@ -69,6 +69,8 @@ mysqldump -u root -p sakila > sakila-data.sql
 ```
 
 ![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/DDL/DDL_DML1.5.png)
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/DDL/DDL_DML1.6.png)
+
 
 1.9. При работе в IDE сформируйте ER-диаграмму получившейся базы данных. При работе в командной строке используйте команду для получения всех таблиц базы данных. (скриншот)
 
