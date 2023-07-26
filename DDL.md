@@ -118,7 +118,7 @@ SHOW KEYS FROM table_name WHERE Key_name = 'PRIMARY';
 
 Там, где напротив таблиц стоят прочерки первичные ключи не обнаружены.
 
-![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/DDL/DDL_DML2.1.png)
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/DDL/DDL_DNL2.1.png)
 
 Вывод с несколькими ключами, где они записаны через запятую.
 
