@@ -79,30 +79,29 @@ mysqldump -u root -p sakila > sakila-data.sql
 Составьте таблицу, используя любой текстовый редактор или Excel, в которой должно быть два столбца: в первом должны быть названия таблиц восстановленной базы, во втором названия первичных ключей этих таблиц. Пример: (скриншот/текст)
 ```
 Название таблицы           | Название первичного ключа
-actor                      | 
-actor_info                 | 
-address                    | 
-category                   | 
-city                       | 
-country                    | 
-customer                   | 
-customer_list              | 
-film                       |
-film_actor                 |
-film_category              |
-film_list                  |
-film_text                  |
-inventory                  |
-language                   |
-nicer_but_slower_film_list |
-payment                    |
-rental                     |
-sales_by_film_category     |
-sales_by_store             |
-staff                      |
-staff_list                 |
-store                      |
-
+actor                      | actor_id
+actor_info                 | -
+address                    | address_id
+category                   | category_id
+city                       | city_id
+country                    | country_id
+customer                   | customer_id
+customer_list              | -
+film                       | film_id
+film_actor                 | actor_id, film_id
+film_category              | category_id, film_id
+film_list                  | -
+film_text                  | film_id
+inventory                  | inventory_id
+language                   | language_id
+nicer_but_slower_film_list | -
+payment                    | payment_id
+rental                     | rental_id
+sales_by_film_category     | -
+sales_by_store             | -
+staff                      | staff_id 
+staff_list                 | -
+store                      | store_id
 ```
 
 
