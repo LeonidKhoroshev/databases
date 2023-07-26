@@ -103,7 +103,30 @@ staff                      | staff_id
 staff_list                 | -
 store                      | store_id
 ```
+Список таблиц получен командой 
 
+```sql
+show tables;
+```
+
+Ключи получены командой
+
+```sql
+SHOW KEYS FROM table_name WHERE Key_name = 'PRIMARY';
+```
+где вместо table_name - названия таблиц (это очень неудобно, но к сожалению, я пока не нашел способ выводить все ключи одним запросом).
+
+Там, где напротив таблиц стоят прочерки первичные ключи не обнаружены.
+
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/DDL/DDL_DML2.1.png)
+
+Вывод с несколькими ключами, где они записаны через запятую.
+
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/DDL/DDL_DML2.2.png)
+
+Вывод таблицы film_text выдал первичный ключ, совпадающий с таблицей film.
+
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/DDL/DDL_DML2.3.png)
 
 ### Задание 3*
 3.1. Уберите у пользователя sys_temp права на внесение, изменение и удаление данных из базы sakila.
