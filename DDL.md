@@ -142,4 +142,4 @@ FLUSH PRIVILEGES;
 
 3.2. Выполните запрос на получение списка прав для пользователя sys_temp. (скриншот)
 
-*Результатом работы должны быть скриншоты обозначенных заданий, а также простыня со всеми запросами.*
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/DDL/DDL_DML2.4.png)
