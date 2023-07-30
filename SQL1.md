@@ -11,8 +11,8 @@ mysql -u root -p
 use sakila
 describe address;
 mysql> select distinct district
-    -> from address
-    -> where district like 'K%a' and district not like '% %';
+from address
+where district like 'K%a' and district not like '% %';
 ```
 
 ![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/SQL1/SQL1.1.png)
@@ -24,8 +24,8 @@ mysql> select distinct district
 ```sql
 describe payment;
 select * from payment
-    -> where payment_date between '2005.06.15' and '2005.06.18'
-    -> and amount > 10;
+where payment_date between '2005.06.15' and '2005.06.18'
+and amount > 10;
 ```
 
 ![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/SQL1/SQL1.2.png)
@@ -33,6 +33,17 @@ select * from payment
 ### Задание 3
 
 Получите последние пять аренд фильмов.
+
+```sql
+describe rental;
+select * from rental
+order by rental_date desc
+limit 5;
+```
+
+![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/SQL1/SQL1.3.png)
+
+
 
 ### Задание 4
 
