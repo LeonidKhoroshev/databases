@@ -15,7 +15,7 @@ mysql> select distinct district
     -> where district like 'K%a' and district not like '% %';
 ```
 
-
+![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/SQL1/SQL1.1.png)
 
 ### Задание 2
 
