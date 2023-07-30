@@ -21,6 +21,15 @@ mysql> select distinct district
 
 Получите из таблицы платежей за прокат фильмов информацию по платежам, которые выполнялись в промежуток с 15 июня 2005 года по 18 июня 2005 года **включительно** и стоимость которых превышает 10.00.
 
+``sql
+describe payment;
+select * from payment
+    -> where payment_date between '2005.06.15' and '2005.06.18'
+    -> and amount > 10;
+```
+
+![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/SQL1/SQL1.2.png)
+
 ### Задание 3
 
 Получите последние пять аренд фильмов.
