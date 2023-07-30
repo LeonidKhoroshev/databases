@@ -53,22 +53,28 @@ limit 5;
 - все буквы в фамилии и имени из верхнего регистра переведите в нижний регистр,
 - замените буквы 'll' в именах на 'pp'.
 
-  ```sql
-  describe customer
-  select lower(replace(first_name, 'LL', 'pp')), lower(last_name)
-  from customer
-  where first_name like 'Kelly' or 'Willie'
-  ```
+```sql
+describe customer
+select lower(replace(first_name, 'LL', 'pp')), lower(last_name)
+from customer
+where first_name like 'Kelly' or 'Willie'
+```
 
-  ![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/SQL1/SQL1.4.png)
+![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/SQL1/SQL1.4.png)
   
-
-## Дополнительные задания (со звёздочкой*)
-Эти задания дополнительные, то есть не обязательные к выполнению, и никак не повлияют на получение вами зачёта по этому домашнему заданию. Вы можете их выполнить, если хотите глубже шире разобраться в материале.
-
 ### Задание 5*
 
 Выведите Email каждого покупателя, разделив значение Email на две отдельных колонки: в первой колонке должно быть значение, указанное до @, во второй — значение, указанное после @.
+
+```sql
+select substring_index(email, '@', 1), substring_index(email, '@', -1)
+from customer
+limit 5;
+```
+Лимит 5 добавлен для того, чтобы сделать скриншот работы скрипта, так как все данные не помещаются в экран, для работоспособности запроса он не нужен
+
+![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/SQL1/SQL1.5.png)
+
 
 ### Задание 6*
 
