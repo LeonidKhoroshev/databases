@@ -53,6 +53,16 @@ limit 5;
 - все буквы в фамилии и имени из верхнего регистра переведите в нижний регистр,
 - замените буквы 'll' в именах на 'pp'.
 
+  ```sql
+  describe customer
+  select lower(replace(first_name, 'LL', 'pp')), lower(last_name)
+  from customer
+  where first_name like 'Kelly' or 'Willie'
+  ```
+
+  ![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/SQL1/SQL1.4.png)
+  
+
 ## Дополнительные задания (со звёздочкой*)
 Эти задания дополнительные, то есть не обязательные к выполнению, и никак не повлияют на получение вами зачёта по этому домашнему заданию. Вы можете их выполнить, если хотите глубже шире разобраться в материале.
 
