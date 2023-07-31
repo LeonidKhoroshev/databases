@@ -76,12 +76,3 @@ limit 5;
 ![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/SQL1/SQL1.5.png)
 
 
-### Задание 6*
-
-Доработайте запрос из предыдущего задания, скорректируйте значения в новых колонках: первая буква должна быть заглавной, остальные — строчными.
-
-```sql
-select lower(substring_index(email, '@', 1)), upper(substring_index(email, '@', -1))
-from customer
-limit 5;
-```
