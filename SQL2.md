@@ -8,13 +8,26 @@
 - город нахождения магазина;
 - количество пользователей, закреплённых в этом магазине.
 
+1. Получаем информацию о базе данных и таблицах которые могут нам понадобиться в формировании запроса.
+   
 ```sql
 mysql -u root -p
 use sakila
 show tables;
+describe staff;
 describe store;
 describe customer;
 describe city;
+```
+
+2. Выбираем нужную по условиям информацию:
+   - имя и фамилию сотрудников объединяем в одну колонку
+   - через address_is к таблице staff присоединяем таблицу address
+   - через address_is к таблице address присоединяем таблицу city для вывода города нахождения магазина
+   - через address_is присоединяем таблицу customer и функцией count считаем, где покупетелей больше 300
+   - группируем вывод city_id
+     
+```sql
 select concat(last_name, first_name) as name, store_id, address_id
 from customer
 inner join
