@@ -21,16 +21,22 @@ describe city;
 ```
 
 2. Выбираем нужную по условиям информацию:
-   - имя и фамилию сотрудников объединяем в одну колонку
-   - через address_is к таблице staff присоединяем таблицу address
-   - через address_is к таблице address присоединяем таблицу city для вывода города нахождения магазина
-   - через address_is присоединяем таблицу customer и функцией count считаем, где покупетелей больше 300
-   - группируем вывод city_id
+   - имя и фамилию сотрудников объединяем в одну колонку;
+   - через address_is к таблице staff присоединяем таблицу address;
+   - через address_is к таблице address присоединяем таблицу city для вывода города нахождения магазина;
+   - через address_is присоединяем таблицу customer и функцией count считаем, где покупетелей больше 300;
+   - группируем вывод по сотрудникам и городам.
      
 ```sql
-select concat(last_name, first_name) as name, store_id, address_id
-from customer
-inner join
+select concat(staff.last_name, staff.first_name), city.city, count(customer.customer_id)
+from staff
+join address on address.address_id = staff.address_id
+join city on city.city_id = address.city_id
+join customer on customer.store_id = staff.store_id
+group by staff.last_name, staff.first_name, city.city
+having count(customer.customer_id) > 300;
+```
+
 
 ```
 
