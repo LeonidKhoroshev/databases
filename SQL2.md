@@ -70,14 +70,29 @@ where length > (select avg(length) from film);
 ![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/SQL1/SQL2.5.png)
 
 
-
 ### Задание 3
 
 Получите информацию, за какой месяц была получена наибольшая сумма платежей, и добавьте информацию по количеству аренд за этот месяц.
 
+Вся необходимая информация содержится в таблице с платежами (payment)
 
-## Дополнительные задания (со звёздочкой*)
-Эти задания дополнительные, то есть не обязательные к выполнению, и никак не повлияют на получение вами зачёта по этому домашнему заданию. Вы можете их выполнить, если хотите глубже шире разобраться в материале.
+```sql
+describe payment;
+```
+Из таблицы с платежами нам необходимо:
+ - сгруппировать платежи по месяцам, посчитаь сумму платежей и их количество;
+ - отсортировать их начиная с наиболее крупной суммы и вывести на экран в консоли только этот месяц.
+
+```sql
+select month(payment_date), sum(amount), count(payment_id)
+from payment
+group by month(payment_date), sum(amount), count(payment_id)
+order by sum(amount) desc
+limit 1;
+```
+
+![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/SQL1/SQL2.6.png)
+
 
 ### Задание 4*
 
