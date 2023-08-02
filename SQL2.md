@@ -37,8 +37,12 @@ group by staff.last_name, staff.first_name, city.city
 having count(customer.customer_id) > 300;
 ```
 
+![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/SQL1/SQL2.1.png)
 
-```
+Вывод очень странный, предполагаю, что что-то не то с моей версией базы данных, так как в таблице staff у меня всего 2 сотрудника
+
+![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/SQL1/SQL2.2.png)
+
 
 ### Задание 2
 
