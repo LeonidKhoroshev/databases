@@ -104,3 +104,15 @@ limit 1;
 ### Задание 5*
 
 Найдите фильмы, которые ни разу не брали в аренду.
+
+Смысл данного задания не понятен, так как ровно такая же задача разбиралась на лекции и скрипт указан в презентации. В целом у меня получился похожий запрос, за исключением того, что я пока опасаючь использовать сокращения имен таблиц, чтобы не запутаться (хотя понимаю, что такая практика может оптимизировать сам запрос и время отработки скрипта). В остальном скрипт идентичен запросу из презентации, за исключением того, что в моей версии вместо left join использован inner join (или просто join).
+
+```sql
+select film.title
+FROM film
+join inventory on inventory.film_id = film.film_id
+join rental on rental.inventory_id = inventory.inventory_id
+where rental.rental_id is null;
+```
+
+![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/SQL1/SQL2.9.png)
