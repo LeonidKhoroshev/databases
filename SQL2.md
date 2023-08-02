@@ -48,6 +48,29 @@ having count(customer.customer_id) > 300;
 
 Получите количество фильмов, продолжительность которых больше средней продолжительности всех фильмов.
 
+В данном задании нам понадобиться только таблица с фильмами (film)
+
+```sql
+ describe film;
+```
+![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/SQL1/SQL2.3.png)
+
+Выводим на экран в терминале количество фильмов, продолжитедльностью больше средней
+
+```sql
+select count(title) 
+from film
+where length > (select avg(length) from film);
+```
+
+![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/SQL1/SQL2.4.png)
+
+В данном задании результат вполне правдоподобен, более того, он легко проверяется вычислением общего количества фильмов и фильмов с продолжительностью ниже средней
+
+![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/SQL1/SQL2.5.png)
+
+
+
 ### Задание 3
 
 Получите информацию, за какой месяц была получена наибольшая сумма платежей, и добавьте информацию по количеству аренд за этот месяц.
