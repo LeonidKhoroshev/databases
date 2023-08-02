@@ -80,13 +80,13 @@ where length > (select avg(length) from film);
 describe payment;
 ```
 Из таблицы с платежами нам необходимо:
- - сгруппировать платежи по месяцам, посчитаь сумму платежей и их количество;
+ - сгруппировать платежи по месяцам и годам (чтобы не сложить одни и те же месяцы разных лет, например август 2005 с августом 2006), посчитать сумму платежей и их количество;
  - отсортировать их начиная с наиболее крупной суммы и вывести на экран в консоли только этот месяц.
 
 ```sql
-select month(payment_date), sum(amount), count(payment_id)
+select year(payment_date), month(payment_date), sum(amount), count(payment_id)
 from payment
-group by month(payment_date), sum(amount), count(payment_id)
+group by year(payment_date), month(payment_date)
 order by sum(amount) desc
 limit 1;
 ```
