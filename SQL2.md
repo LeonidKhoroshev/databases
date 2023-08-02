@@ -93,6 +93,9 @@ limit 1;
 
 ![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/SQL1/SQL2.6.png)
 
+Выполним проверку, убрав из запроса ограничение на вывод (limit 1). Результаты совпадают
+
+![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/SQL1/SQL2.7.png)
 
 ### Задание 4*
 
