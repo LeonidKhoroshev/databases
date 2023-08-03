@@ -22,6 +22,7 @@ where table_schema = 'sakila';
 
 ![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/indexes/index1.2.png)
 
+Результат - индексы занимают 35% от общего объема хранимой информации в базе данных "Sakila".
 
 ### Задание 2
 
@@ -37,6 +38,28 @@ where date(p.payment_date) = '2005-07-30' and p.payment_date = r.rental_date and
 Вывод анализа запроса:
 
 ![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/indexes/index2.1.png)
+
+Из него не особо понятно, что не так, выполним сам запрос:
+
+![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/indexes/index2.2.png)
+
+Из таблицы видно, что в выводе запроса у нас участвуют данные из таблиц customer, payment и film не участвуют данные из inventory и rental, хотя все они участвуют в запросе. Попробуем их от туда убрать.
+
+```sql
+select distinct concat(c.last_name, ' ', c.first_name), sum(p.amount) over (partition by c.customer_id, f.title)
+from payment p, customer c, film f
+where date(p.payment_date) = '2005-07-30' and p.customer_id = c.customer_id;
+```
+
+Собственно вывод не изменился:
+
+![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/indexes/index2.3.png);
+
+Сделаем повторный анализ запроса:
+
+![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/indexes/index2.4.png);
+
+
 
 
 ### Задание 3*
