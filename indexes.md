@@ -53,7 +53,7 @@ where date(p.payment_date) = '2005-07-30' and p.customer_id = c.customer_id;
 
 Собственно вывод не изменился:
 
-![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/indexes/index2.3.png);
+![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/indexes/index2.3..png);
 
 Сделаем повторный анализ запроса:
 
