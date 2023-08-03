@@ -10,7 +10,7 @@
 ```sql
 describe information_schema.tables;
 ```
-
+![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/indexes/index1.1.png)
 
 ### Задание 2
 
