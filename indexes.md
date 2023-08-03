@@ -59,11 +59,4 @@ where date(p.payment_date) = '2005-07-30' and p.customer_id = c.customer_id;
 
 ![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/indexes/index2.4.png);
 
-
-
-
-### Задание 3*
-
-Самостоятельно изучите, какие типы индексов используются в PostgreSQL. Перечислите те индексы, которые используются в PostgreSQL, а в MySQL — нет.
-
-*Приведите ответ в свободной форме.*
+Из результатов explain analyze видно снижение показателя actual time (реальное время в миллисекундах) с 2849 до 951, c 7349 до 4757 в различных строках плана запроса, так что можно сказать, что оптимизация дала свой результат.
