@@ -5,12 +5,23 @@
 
 Напишите запрос к учебной базе данных, который вернёт процентное отношение общего размера всех индексов к общему размеру всех таблиц.
 
-Для решения данной задачи необходимо найти размер всех индексов и таблиц, поэтому сначала смотрим, какие данные у нас есть
+Для решения данной задачи необходимо найти размер всех индексов и таблиц, поэтому сначала смотрим, какие данные у нас есть:
 
 ```sql
 describe information_schema.tables;
 ```
 ![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/indexes/index1.1.png)
+
+Из данного вывода нам необходимы  DATA_LENGTH (размер данных в базе данных) и INDEX_LENGTH (размер индексов в базе данных).
+
+```sql
+select table_schema, round(sum(index_length)*100/sum(index_length+data_length)) as '% memory'
+from information_schema.tables
+where table_schema = 'sakila';
+```
+
+![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/indexes/index1.2.png)
+
 
 ### Задание 2
 
@@ -23,8 +34,10 @@ where date(p.payment_date) = '2005-07-30' and p.payment_date = r.rental_date and
 - перечислите узкие места;
 - оптимизируйте запрос: внесите корректировки по использованию операторов, при необходимости добавьте индексы.
 
-## Дополнительные задания (со звёздочкой*)
-Эти задания дополнительные, то есть не обязательные к выполнению, и никак не повлияют на получение вами зачёта по этому домашнему заданию. Вы можете их выполнить, если хотите глубже шире разобраться в материале.
+Вывод анализа запроса:
+
+![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/indexes/index2.1.png)
+
 
 ### Задание 3*
 
