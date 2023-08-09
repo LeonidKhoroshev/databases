@@ -73,7 +73,28 @@ FLUSH PRIVILEGES;
 ```
 
 
+6. Создаем пользователя на обоих нодах для применения репликации
+```sql
+CREATE USER 'replication'@'%' IDENTIFIED WITH mysql_native_password BY '12345';
+GRANT REPLICATION SLAVE ON *.* TO 'replication'@'%';
+```
 
+7. На первой ноде mysql1 выводим на экран информацию, необходимую для подключения к ней второй ноды mysql2.
+
+```sql
+SHOW MASTER STATUS;
+```
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/replication/replication2.3.png)
+
+8. Подключаем вторую ноду к первой в качестве slave.
+
+```sql
+CHANGE MASTER TO MASTER_HOST='158.160.108.90', MASTER_USER='replication', MASTER_PASSWORD='12345', MASTER_LOG_FILE = 'mybin.000001', MASTER_LOG_POS=1519;
+START SLAVE;
+SHOW SLAVE STATUS;
+```
+
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/replication/replication2.4.png)
 
 ---
 
