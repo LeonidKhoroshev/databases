@@ -61,7 +61,8 @@ log_bin=/var/log/mysql/mybin.log
 systemctl start mysqld
 systemctl status mysqld
 ```
-
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/replication/replication2.1.png)
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/replication/replication2.2.png)
 
 
 ---
