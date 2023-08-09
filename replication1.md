@@ -91,15 +91,16 @@ SHOW MASTER STATUS;
 ```sql
 CHANGE MASTER TO MASTER_HOST='158.160.108.90', MASTER_USER='replication', MASTER_PASSWORD='12345', MASTER_LOG_FILE = 'mybin.000001', MASTER_LOG_POS=1519;
 START SLAVE;
-SHOW SLAVE STATUS;
+SHOW SLAVE STATUS\G;
 ```
 
 ![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/replication/replication2.4.png)
 
----
+9. Проверяем корректность работы репликации создавая и удаляя базы данных на мастере mysql1 и отслеживая изменения на slave mysql2.
 
-## Дополнительные задания (со звёздочкой*)
-Эти задания дополнительные, то есть не обязательные к выполнению, и никак не повлияют на получение вами зачёта по этому домашнему заданию. Вы можете их выполнить, если хотите глубже шире разобраться в материале.
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/replication/replication2.5.png)
+
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/replication/replication2.6.png)
 
 ---
 
@@ -107,4 +108,4 @@ SHOW SLAVE STATUS;
 
 Выполните конфигурацию master-master репликации. Произведите проверку.
 
-*Приложите скриншоты конфигурации, выполнения работы: состояния и режимы работы серверов.*
+
