@@ -11,7 +11,7 @@
 
 ### Задание 2
 
-Выполните конфигурацию master-slave репликации, примером можно пользоваться из лекции.
+Выполните конфигурацию master-slave репликации.
 
 1. В Яндекс облаке создаем 2 виртуальные машины Centos7 (mysql1 и mysql2) с минимальными характеристиками (в целях экономии наших ресурсов).
 
@@ -108,4 +108,25 @@ SHOW SLAVE STATUS\G;
 
 Выполните конфигурацию master-master репликации. Произведите проверку.
 
+1. Выводим мастер-статус на slave mysql2.
 
+```sql
+SHOW MASTER STATUS;
+```
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/replication/replication2.7.png)
+
+2. Подключаем первую ноду ко второй (логика аналогично п.8 из задания 2, с тем отличием, что теперь мы указываем IP второй ноды, а также меняем лог файл и позицию мастер лога исходя из регультатов выполнения п.1 задания 3).
+
+```sql
+CHANGE MASTER TO MASTER_HOST='158.160.47.168', MASTER_USER='replication', MASTER_PASSWORD='12345', MASTER_LOG_FILE = 'mybin.000001', MASTER_LOG_POS=2581;
+START SLAVE;
+SHOW SLAVE STATUS\G;
+```
+
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/replication/replication2.8.png)
+
+3. Выполняем проверку работы конфигурации master-master создавая и удаляя базы данных на наших нодах.
+
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/replication/replication2.9.png)
+
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/replication/replication2.10.png)
