@@ -69,7 +69,9 @@ systemctl status mysqld
 ```sql
 mysql -p
 ALTER USER 'root'@'localhost' IDENTIFIED BY '12345';
+FLUSH PRIVILEGES;
 ```
+
 
 
 
