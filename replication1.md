@@ -64,6 +64,13 @@ systemctl status mysqld
 ![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/replication/replication2.1.png)
 ![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/replication/replication2.2.png)
 
+6. Подключаемся к нашим СУБД на обеих нодах через пароль, который мы увидели в логах (п.3, команда cat), и меняем пароль для корректной работы репликации
+
+```sql
+mysql -p
+ALTER USER 'root'@'localhost' IDENTIFIED BY '12345';
+```
+
 
 
 ---
