@@ -65,6 +65,7 @@ systemctl status mysqld
 ![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/replication/replication2.2.png)
 
 
+
 ---
 
 ## Дополнительные задания (со звёздочкой*)
