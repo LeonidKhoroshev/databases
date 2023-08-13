@@ -130,3 +130,61 @@ psql -X -U repmgr -h 10.128.0.12 -c "IDENTIFY_SYSTEM" replication=1
 ```
 
 ![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/replication/replication2.12.png)
+
+8. Переходим к настройкам менеджера репликаций.
+
+```
+nano /etc/repmgr/14/repmgr.conf
+```
+
+Первая нода:
+
+```
+node_id=1
+node_name='mysql1'
+conninfo='host=10.128.0.12 dbname=repmgr user=repmgr'
+data_directory='/var/lib/pgsql/14/data/'
+use_replication_slots=true
+log_level='INFO'
+log_file='/var/log/repmgr/repmgr-14.log'
+pg_bindir='/usr/pgsql-14/bin/'
+
+service_start_command = 'sudo systemctl start postgresql-14'
+service_stop_command = 'sudo systemctl stop postgresql-14'
+service_restart_command = 'sudo systemctl restart postgresql-14'
+service_reload_command = 'sudo systemctl reload postgresql-14'
+```
+
+Вторая нода:
+
+```
+node_id=2
+node_name='mysql2'
+conninfo='host=10.128.0.3 dbname=repmgr user=repmgr'
+data_directory='/var/lib/pgsql/14/data/'
+use_replication_slots=true
+log_level='INFO'
+log_file='/var/log/repmgr/repmgr-14.log'
+pg_bindir='/usr/pgsql-14/bin/'
+
+service_start_command = 'sudo systemctl start postgresql-14'
+service_stop_command = 'sudo systemctl stop postgresql-14'
+service_restart_command = 'sudo systemctl restart postgresql-14'
+service_reload_command = 'sudo systemctl reload postgresql-14'
+```
+
+9. Регистрируем и стартуем менеджер репликаций на первой ноде
+
+```
+$ sudo -u postgres /usr/pgsql-14/bin/repmgr -f /etc/repmgr/14/repmgr.conf master register
+$ sudo -u postgres /usr/pgsql-14/bin/repmgr -f /etc/repmgr/14/repmgr.conf cluster show
+```
+
+10. На второй ноде проверяем возможность подключения к первой и запускаем репликацию
+
+```
+sudo -u postgres /usr/pgsql-14/bin/repmgr -h 10.128.0.12 -U repmgr -d repmgr -f /etc/repmgr/14/repmgr.conf standby clone --dry-run
+sudo -u postgres /usr/pgsql-14/bin/repmgr -h 10.128.0.12 -U repmgr -d repmgr -f /etc/repmgr/14/repmgr.conf standby clone
+```
+
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/replication/replication2.13.png)
