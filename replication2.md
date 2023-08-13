@@ -52,4 +52,81 @@ DRBD, является частью ядра Linux и позволяет пов�
 
 Выполните настройку выбранных методов шардинга из задания 2.
 
-*Пришлите конфиг Docker и SQL скрипт с командами для базы данных*.
+Для выполнения задания настроим postgres на двух нодах и поднимем на них кластер. Настройка будет осуществляться на виртуальных машинах в Яндекс облаке. Несмотря на то, что ноды называются mysql1 и mysql2, потому что подняты для выполнения предыдущего домашнего задания (настройка репликаций master-slave и master-master), разворачивать на них будем именно postgres.
+
+1. Установка пакетного менеджера, СУБД и менеджер управления репликациями.
+```sql
+yum -y install https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+yum install -y postgresql14-server postgresql14-contrib postgresql14
+yum install -y repmgr_14
+```
+
+2. Инициализируем первую ноду mysql1
+```sql
+/usr/pgsql-14/bin/postgresql-14-setup initdb
+```
+3. Правим конфигурационные файлы на первой ноде.
+```
+nano /var/lib/pgsql/14/data/postgresql.conf
+```
+
+```
+listen_addresses = '*'
+wal_level = replica
+max_wal_senders = 10
+max_replication_slots = 10
+hot_standby = on
+wal_log_hints = on
+archive_mode = on
+archive_command = '/bin/true'
+wal_keep_size = 1GB
+```
+
+```
+nano /var/lib/pgsql/14/data/pg_hba.conf
+```
+
+```
+host all repmgr 10.128.0.0/24 scram-sha-256
+host replication repmgr 10.128.0.0/24 md5
+```
+
+4. Запускаем СУБД
+
+```
+systemctl enable --now postgresql-14
+```
+
+5. Заходим на первой ноде в postgres и создаем пользователя, необходимого нам для настройки репликации
+
+```sql
+su - postgres
+psql
+CREATE USER repmgr WITH ENCRYPTED PASSWORD '12345';
+CREATE DATABASE repmgr OWNER repmgr;
+ALTER USER repmgr WITH SUPERUSER;
+ALTER USER repmgr SET search_path TO repmgr, "$user", public;
+```
+
+6. Прорисываем параметры подключения (на обоих нодах) 
+
+```
+nano ~/.pgpass
+```
+
+```
+# hostname:port:database:username:password
+*:*:*:repmgr:12345
+```
+
+```
+chmod 600 ~/.pgpass
+```
+
+7. На второй ноде проверяем возможность запуска репликации
+   
+```
+psql -X -U repmgr -h 10.128.0.12 -c "IDENTIFY_SYSTEM" replication=1
+```
+
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/replication/replication2.12.png)
