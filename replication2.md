@@ -188,3 +188,74 @@ sudo -u postgres /usr/pgsql-14/bin/repmgr -h 10.128.0.12 -U repmgr -d repmgr -f 
 ```
 
 ![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/replication/replication2.13.png)
+
+11. Создаем на первой ноде базу данных test, подключаемся к ней и создаем в ней таблицы из задания 2 (users, books, stores)
+
+```sql
+CREATE DATABASE test;
+\connect test;
+```
+
+Users
+
+```sql
+CREATE TABLE users (
+users_id bigint not null,
+lastname character varying not null,
+firstname character varying not null,
+books_id bigint not null,
+stores_id bigint not null
+);
+```
+
+Books
+
+```sql
+CREATE TABLE books (
+books_id bigint not null,
+author character varying not null,
+title character varying not null,
+stores_id bigint not null
+);
+```
+
+Stores
+
+```sql
+CREATE TABLE stores (
+id_stores bigint not null,
+address text not null,
+books_id bigint not null,
+users_id bigint not null
+);
+```
+
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/replication/replication2.14.png)
+
+12. Настраиваем вертикальное партицирование таблиц users и books. Для этого создаем таблицы users_1 и users_2, в которых будем хранить данные пользователей в соответствии со схемой в задании 2, аналогичную процедуру проделываем с таблицей books.
+
+```sql
+CREATE TABLE users_1 (
+CHECK ( users_id > 0 AND users_id <=200 )
+) INHERITS (users)
+```
+
+```sql
+CREATE TABLE users_2 (
+CHECK ( users_id > 200 AND users_id <=400 )
+) INHERITS (users)
+```
+
+```sql
+CREATE TABLE books_1 (
+CHECK ( books_id > 0 AND books_id <=200 )
+) INHERITS (books)
+```
+
+```sql
+CREATE TABLE books_2 (
+CHECK ( books_id > 200 AND books_id <=400 )
+) INHERITS (books)
+```
+
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/replication/replication2.15.png)
