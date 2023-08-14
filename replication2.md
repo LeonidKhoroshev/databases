@@ -173,14 +173,14 @@ service_restart_command = 'sudo systemctl restart postgresql-14'
 service_reload_command = 'sudo systemctl reload postgresql-14'
 ```
 
-9. Регистрируем и стартуем менеджер репликаций на первой ноде
+9. Регистрируем и стартуем менеджер репликаций на первой ноде.
 
 ```
 $ sudo -u postgres /usr/pgsql-14/bin/repmgr -f /etc/repmgr/14/repmgr.conf master register
 $ sudo -u postgres /usr/pgsql-14/bin/repmgr -f /etc/repmgr/14/repmgr.conf cluster show
 ```
 
-10. На второй ноде проверяем возможность подключения к первой и запускаем репликацию
+10. На второй ноде проверяем возможность подключения к первой и запускаем репликацию.
 
 ```
 sudo -u postgres /usr/pgsql-14/bin/repmgr -h 10.128.0.12 -U repmgr -d repmgr -f /etc/repmgr/14/repmgr.conf standby clone --dry-run
@@ -189,7 +189,7 @@ sudo -u postgres /usr/pgsql-14/bin/repmgr -h 10.128.0.12 -U repmgr -d repmgr -f 
 
 ![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/replication/replication2.13.png)
 
-11. Создаем на первой ноде базу данных test, подключаемся к ней и создаем в ней таблицы из задания 2 (users, books, stores)
+11. Создаем на первой ноде базу данных test, подключаемся к ней и создаем в ней таблицы из задания 2 (users, books, stores).
 
 ```sql
 CREATE DATABASE test;
@@ -259,3 +259,8 @@ CHECK ( books_id > 200 AND books_id <=400 )
 ```
 
 ![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/replication/replication2.15.png)
+
+13. Дополнительно проверим работу нашей репликации со второй ноды.
+
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/replication/replication2.16.png)
+
