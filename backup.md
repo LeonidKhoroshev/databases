@@ -26,7 +26,7 @@
 Резервное копирование базы данных с одного хоста на другой.
 
 ```sql
-pg_dump -h hostname_1 dbname | psql -h hostname2 dbname
+pg_dump -h hostname_1  | psql -h hostname_2 dbname
 ```
 
 Восстановление базы данных из дамп-файла возможно двумя командами:
@@ -38,12 +38,81 @@ psql dbname < dump_file
 ```sql
 pg_restore -U username -d dbname -v "dump_file"
 ```
+dbname - база данных, чью резервную копию мы создаем.
+dump_file - дамп файл, созданный в результате резервного копирования и из которого восстанавливается база данных.
+hostdbnamename_1 - хост с нашей базой данных.
+hostname_2 - хост, где мы создаем резервную копию.
 
 Pg_restore от psql отличается при восстановлении базы тем, что psql используется при восстановлении дампа, сделанного в формате plain, а pg_restore — при восстановлении дампа, сделанного в других форматах.
 
 2.1.* Возможно ли автоматизировать этот процесс? Если да, то как?
 
-*Приведите ответ в свободной форме.*
+Выполнить автоматизацию резервного копирования можно и даже нужно. Для этого нам необходим bash скрипт, выполняющий резервное копирование и утилита cron, которая запускает наш скрипт по указанному нами же расписанию.
+
+```
+#! /bin/sh
+db_name=dbname
+db_user=dbuser
+db_host=host
+backupfolder=~/postgresql/backups 
+recipient_email=youremail@example.ru
+# Сколько дней хранить файлы
+keep_day=30
+sqlfile=$backupfolder/database-$(date +%d-%m-%Y_%H-%M-%S).sql
+zipfile=$backupfolder/database-$(date +%d-%m-%Y_%H-%M-%S).zip
+mkdir -p $backupfolder
+
+if pg_dump -U $db_user -h $db_host $db_name > $sqlfile ; then
+   echo 'Sql dump created'
+else
+   echo 'pg_dump return non-zero code' | mailx -s 'No backup was created!' $recipient_email
+   exit
+fi
+
+if gzip -c $sqlfile > $zipfile; then
+   echo 'The backup was successfully compressed'
+else
+   echo 'Error compressing backup' | mailx -s 'Backup was not created!' $recipient_email
+   exit
+fi
+rm $sqlfile 
+echo $zipfile | mailx -s -a $sqlfile 'Backup was successfully created' $recipient_email
+ 
+find $backupfolder -mtime +$keep_day -delete
+```
+
+Для корректной работы скрипта, его необходимо сделать исполняемым и создать файл pgpass.
+
+```
+chmod +x pg_backup.bash
+```
+
+```
+nano  ~/.pgpass
+# hostname:port:database:username:password
+*:*:*:dbuser:dbpassword
+```
+
+```
+chmod 600 ~/.pgpass
+```
+
+Далее настраиваем периодичность выполнения резервного копирования. Если мы хотим стандартный интервал, то необходимо переместить наш скрипт в одну из указанных директорий:
+/etc/cron.minutely - копирование каждую минуту.
+/etc/cron.hourly - копирование каждый час.
+/etc/cron.daily - копирование каждый день.
+/etc/cron.weekly - копирование каждую неделю.
+/etc/cron.monthly - копирование каждый месяц.
+
+Если требуется более точная настройка, то нам необходимо отредактировать файл /etc/crontab.
+
+```
+crontab -e
+0 0 * * * /usr/local/bin/our_script.sh
+```
+
+Данный пример настраивает резервное копирование ежесуточно в полночь, но можно настроить любой интервал по следующему правилу:
+минута час день месяц день_недели /путь/к/исполняемому/файлу.
 
 ---
 
@@ -51,7 +120,13 @@ Pg_restore от psql отличается при восстановлении б
 
 3.1. С помощью официальной документации приведите пример команды инкрементного резервного копирования базы данных MySQL.
 
-
+```sql
+mysqlbackup --defaults-file=/home/dbadmin/my.cnf \
+  --incremental --incremental-base=history:last_backup \
+  --backup-dir=/home/dbadmin/temp_dir \
+  --backup-image=incremental_image1.bi \
+   backup-to-image
+```
 
 3.1.* В каких случаях использование реплики будет давать преимущество по сравнению с обычным резервным копированием?
 
