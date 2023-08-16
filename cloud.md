@@ -81,12 +81,85 @@ select * from test_table;
 
 Создайте кластер, как в задании 1 с помощью Terraform.
 
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/cloud/cloud1.7.png)
 
-*В качестве результата вашей работы пришлите скришоты:*
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/cloud/cloud1.8.png)
 
-*1) Скриншот созданной базы данных.*
-*2) Код Terraform, создающий базу данных.*
+Код terraform (файл main.tf)
 
----
+```
+terraform {
+  required_providers {
+    yandex = {
+      source = "yandex-cloud/yandex"
+    }
+  }
+  required_version = ">= 0.14"
+}
 
-Задания, помеченные звёздочкой, — дополнительные, то есть не обязательные к выполнению, и никак не повлияют на получение вами зачёта по этому домашнему заданию. Вы можете их выполнить, если хотите глубже шире разобраться в материале.
+provider "yandex" {
+  zone = "ru-central1-a"
+  token = "y0_AgAAAAAp7qigAATuwQAAAADhAMvANnKdk1oJS8uomqePQxQr0K1VqSs"
+  cloud_id = "b1g3ks25rm2qagep03qb"
+  folder_id = "b1gadttfn3t0cohh2hk2"
+}
+
+resource "yandex_mdb_postgresql_cluster" "netology" {
+  name                = "netology"
+  environment         = "PRODUCTION"
+  network_id          = "enpkqu7u4btrg3ucmji3"
+  deletion_protection = false
+
+  config {
+    version = 15
+    resources {
+      resource_preset_id = "s2.micro"
+      disk_type_id       = "network-ssd"
+      disk_size          = 10
+    }
+
+  }
+
+  host {
+    zone      = "ru-central1-a"
+    name      = "host_1"
+    subnet_id = "e9bu1cd8q2f55hlq03vg"
+  }
+
+  host {
+    zone      = "ru-central1-b"
+    name      = "host_2"
+    subnet_id = "e2lkolbvj8rtokc1s51p"
+  }
+}
+
+resource "yandex_mdb_postgresql_database" "test" {
+cluster_id = "yandex_mdb_postgresql_cluster.mypg.id"
+name       = "test"
+owner      = "leo"
+depends_on = [
+  yandex_mdb_postgresql_user.leo
+]
+}
+
+resource "yandex_mdb_postgresql_user" "leo" {
+  cluster_id = "yandex_mdb_postgresql_cluster.mypg.id"
+  name       = "leo"
+  password   = "12345"
+}
+resource "yandex_vpc_network" "default" { name = "default" }
+
+resource "yandex_vpc_subnet" "default-ru-central1-a" {
+  name           = "default-ru-central1-a"
+  zone           = "ru-central1-a"
+  network_id     = "e9bu1cd8q2f55hlq03vg"
+  v4_cidr_blocks = ["10.128.0.0/24"]
+}
+
+resource "yandex_vpc_subnet" "default-ru-central1-b" {
+  name           = "default-ru-central1-b"
+  zone           = "ru-central1-b"
+  network_id     = "e2lkolbvj8rtokc1s51p"
+  v4_cidr_blocks = ["10.129.0.0/24"]
+}
+```
