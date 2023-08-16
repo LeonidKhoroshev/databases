@@ -10,15 +10,22 @@
 - класс хоста: s2.micro, диск network-ssd любого размера;
 ![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/cloud/cloud1.1.png)
 - хосты: нужно создать два хоста в двух разных зонах доступности и указать необходимость публичного доступа, то есть публичного IP адреса, для них;
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/cloud/cloud1.2.png)
 - установите учётную запись для пользователя и базы.
-
-Остальные параметры оставьте по умолчанию либо измените по своему усмотрению.
-
-* Нажмите кнопку «Создать кластер» и дождитесь окончания процесса создания, статус кластера = RUNNING. Кластер создаётся от 5 до 10 минут.
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/cloud/cloud1.3.png)
 
 #### Подключение к мастеру и реплике 
 
 * Используйте инструкцию по подключению к кластеру, доступную на вкладке «Обзор»: cкачайте SSL-сертификат и подключитесь к кластеру с помощью утилиты psql, указав hostname всех узлов и атрибут ```target_session_attrs=read-write```.
+
+```sql
+psql "host=rc1a-iic0vm6yotm8uevs.mdb.yandexcloud.net \
+      port=6432 \
+      sslmode=verify-full \
+      dbname=test \
+      user=leo \
+      target_session_attrs=read-write"
+```
 
 * Проверьте, что подключение прошло к master-узлу.
 ```
@@ -38,10 +45,19 @@ CREATE TABLE test_table(text varchar);
 ```
 insert into test_table values('Строка 1');
 ```
-
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/cloud/cloud1.5.png)
 * Выйдите из psql командой ```\q```.
 
 * Теперь подключитесь к узлу-реплике. Для этого из команды подключения удалите атрибут ```target_session_attrs```  и в параметре атрибут ```host``` передайте только имя хоста-реплики. Роли хостов можно посмотреть на соответствующей вкладке UI консоли.
+
+```
+psql "host=rc1b-h32of0ws2s7oyx8a.mdb.yandexcloud.net \
+      port=6432 \
+      sslmode=verify-full \
+      dbname=test \
+      user=leo \
+      target_session_attrs=read-only"
+```
 
 * Проверьте, что подключение прошло к узлу-реплике.
 ```
@@ -57,10 +73,7 @@ select status from pg_stat_wal_receiver;
 select * from test_table;
 ```
 
-*В качестве результата вашей работы пришлите скриншоты:*
-
-*1) Созданной базы данных;*
-*2) Результата вывода команды на реплике ```select * from test_table;```.*
+![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/cloud/cloud1.6.png)
 
 
 
