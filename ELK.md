@@ -19,6 +19,25 @@
 
 Установите и запустите Elasticsearch, после чего поменяйте параметр cluster_name на случайный. 
 
+Установка из официального репозитоия оказалась недоступна, поэтому пакет скачан с яндекс зеркала (к сожалению на данный момент репозиторий яндекса содержит только deb пакеты, поэтому все работы выполнены на ВМ с ОС Debian11, созданной в Яндекс облаке специально под выполнение данного задания).
+
+```
+wget https://mirror.yandex.ru/mirrors/elastic/8/pool/main/e/elasticsearch/elasticsearch-8.6.2-amd64.deb
+dpkg -i elasticsearch-8.6.2-amd64.deb
+rm elasticsearch-8.6.2-amd64.deb
+```
+Далее находим файл elasticsearch.yml и редактируем настройки Elasticsearch, меняем имя кластера со стандартного на leonid, а также параметр xpack.security.enabled с true на false, это необходимо для выполнения команды curl -X GET, в противном случае получаем пустой ответ от сервера curl:(52).
+
+```
+find / -name elasticsearch.yml
+nano /etc/elasticsearch/elasticsearch.yml
+cluster.name: leonid
+xpack.security.enabled: false
+```
+
+
+
+
 *Приведите скриншот команды 'curl -X GET 'localhost:9200/_cluster/health?pretty', сделанной на сервере с установленным Elasticsearch. Где будет виден нестандартный cluster_name*.
 
 ---
