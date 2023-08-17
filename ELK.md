@@ -68,7 +68,13 @@ systemctl start kibana
 
 ### Задание 3. Logstash
 
-Установите и запустите Logstash и Nginx. С помощью Logstash отправьте access-лог Nginx в Elasticsearch. 
+Установите и запустите Logstash и Nginx. С помощью Logstash отправьте access-лог Nginx в Elasticsearch.
+
+```
+wget https://mirror.yandex.ru/mirrors/elastic/8/pool/main/l/logstash/logstash-8.6.2-amd64.deb
+dpkg -i logstash-8.6.2-amd64.deb
+apt install ngnix
+```
 
 *Приведите скриншот интерфейса Kibana, на котором видны логи Nginx.*
 
