@@ -45,7 +45,24 @@ systemctl start elasticsearch
 
 Установите и запустите Kibana.
 
-*Приведите скриншот интерфейса Kibana на странице http://<ip вашего сервера>:5601/app/dev_tools#/console, где будет выполнен запрос GET /_cluster/health?pretty*.
+Устанавливаем Kibana аналогично заданию 1
+
+```
+wget https://mirror.yandex.ru/mirrors/elastic/8/pool/main/k/kibana/kibana-8.6.2-amd64.deb
+dpkg -i kibana-8.6.2-amd64.deb
+rm kibana-8.6.2-amd64.deb
+```
+
+Меняем настройки Kibana для возможности подключения через веб-интерфейс с других хостов.
+
+```
+nano /etc/kibana/kibana.yml
+server.host: "0.0.0.0"
+systemctl enable kibana
+systemctl start kibana
+```
+
+![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/ELK/elk2.1.png)
 
 ---
 
