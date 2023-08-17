@@ -25,8 +25,6 @@
 wget https://mirror.yandex.ru/mirrors/elastic/8/pool/main/e/elasticsearch/elasticsearch-8.6.2-amd64.deb
 dpkg -i elasticsearch-8.6.2-amd64.deb
 rm elasticsearch-8.6.2-amd64.deb
-systemctl enable elasticsearch
-systemctl start elasticsearch
 ```
 Далее находим файл elasticsearch.yml и редактируем настройки Elasticsearch, меняем имя кластера со стандартного на leonid, а также параметр xpack.security.enabled с true на false, это необходимо для выполнения команды curl -X GET, в противном случае получаем пустой ответ от сервера curl:(52).
 
@@ -35,6 +33,8 @@ find / -name elasticsearch.yml
 nano /etc/elasticsearch/elasticsearch.yml
 cluster.name: leonid
 xpack.security.enabled: false
+systemctl enable elasticsearch
+systemctl start elasticsearch
 ```
 
 ![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/ELK/elk1.1.png)
