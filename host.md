@@ -125,7 +125,6 @@ sudo cp /bin/ping /usr/bin/man
 
 ![Alt text](https://github.com/LeonidKhoroshev/databases/blob/main/host/host2.7.png)
 
-*В качестве ответа пришлите снимки экрана с поэтапным выполнением задания.*
 
 
 
