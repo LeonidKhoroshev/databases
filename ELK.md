@@ -75,9 +75,12 @@ systemctl start kibana
 ```
 wget https://mirror.yandex.ru/mirrors/elastic/8/pool/main/l/logstash/logstash-8.6.2-amd64.deb
 dpkg -i logstash-8.6.2-amd64.deb
+rm logstash-8.6.2-amd64.deb
 apt install ngnix
 systemctl enable logstash
-systwmstl enable nginx
+systemctl start logstash
+systemctl enable nginx
+systemctl start nginx
 ```
 Проверяем, что установка прошла корректно
 ![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/ELK/elk3.1.png)
@@ -119,6 +122,17 @@ output {
 
 Установите и запустите Filebeat. Переключите поставку логов Nginx с Logstash на Filebeat. 
 
+```
+wget https://mirror.yandex.ru/mirrors/elastic/8/pool/main/f/filebeat/filebeat-8.6.2-amd64.deb
+dpkg -i filebeat-8.6.2-amd64.deb
+rm filebeat-8.6.2-amd64.deb
+systemctl enable filebeat
+systemctl start filebeat
+```
+
+Проверяем, что установка прошла корректно
+![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/ELK/elk4.1.png)
+
 *Приведите скриншот интерфейса Kibana, на котором видны логи Nginx, которые были отправлены через Filebeat.*
 
 
@@ -127,7 +141,7 @@ output {
 
 ### Задание 5*. Доставка данных 
 
-Настройте поставку лога в Elasticsearch через Logstash и Filebeat любого другого сервиса , но не Nginx. 
+Настройте поставку лога в Elasticsearch через Logstash и Filebeat любого другого сервиса, но не Nginx. 
 Для этого лог должен писаться на файловую систему, Logstash должен корректно его распарсить и разложить на поля. 
 
 *Приведите скриншот интерфейса Kibana, на котором будет виден этот лог и напишите лог какого приложения отправляется.*
