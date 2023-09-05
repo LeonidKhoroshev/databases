@@ -133,6 +133,24 @@ systemctl start filebeat
 Проверяем, что установка прошла корректно
 ![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/ELK/elk4.1.png)
 
+Возвращаемся к настройкам logstash.conf в директории etc/logstash/conf.d (меняем секцию input для того, чтобы данные поступали от filebeat)
+
+```
+input {
+  beats {
+    port => 5044
+#  file {
+#    path => "/var/log/nginx/access.log"
+#    start_position => "beginning"
+ }
+```
+
+Далее прописывает настройки filebeat в файле /etc/filebeat/filebeat.yml
+
+```
+
+```
+
 *Приведите скриншот интерфейса Kibana, на котором видны логи Nginx, которые были отправлены через Filebeat.*
 
 
