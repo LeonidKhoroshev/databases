@@ -80,6 +80,7 @@ systemctl enable logstash
 systwmstl enable nginx
 ```
 Проверяем, что установка прошла корректно
+![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/ELK/elk3.1.png)
 
 Создаем файл logstash.conf в директории etc/logstash/conf.d, где прописываем настройки отправки access-логов Nginx в Elasticsearch:
 - секция input описывает, где мы берем данные (в нашем случае это файл access.log);
