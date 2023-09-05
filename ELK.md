@@ -70,10 +70,44 @@ systemctl start kibana
 
 Установите и запустите Logstash и Nginx. С помощью Logstash отправьте access-лог Nginx в Elasticsearch.
 
+Устанавливаем Logstash аналогично заданиям 1 и 2, а также Nginx из apt-репозитория
+
 ```
 wget https://mirror.yandex.ru/mirrors/elastic/8/pool/main/l/logstash/logstash-8.6.2-amd64.deb
 dpkg -i logstash-8.6.2-amd64.deb
 apt install ngnix
+systemctl enable logstash
+systwmstl enable nginx
+```
+Проверяем, что установка прошла корректно
+
+Создаем файл logstash.conf в директории etc/logstash/conf.d, где прописываем настройки отправки access-логов Nginx в Elasticsearch:
+- секция input описывает, где мы берем данные (в нашем случае это файл access.log);
+- секция filter - то как мы обрабатываем и приводим данные в вид, удобный для восприятия пользователем;
+- секция output описывает вывод данных для просмотра. 
+```
+input {
+  file {
+    path => "/var/log/nginx/access.log"
+    start_position => "beginning"
+ }
+}
+
+filter {
+    match => { "message" => "%{IPORHOST:remote_ip} - %{DATA:user_name}
+\[%{HTTPDATE:access_time}\] \"%{WORD:http_method} %{DATA:url}
+HTTP/%{NUMBER:http_version}\" %{NUMBER:response_code} %{NUMBER:body_sent_bytes}
+\"%{DATA:referrer}\" \"%{DATA:agent}\"" }
+    }
+    mutate {
+         remove_field => [ "host" ]
+    }
+}
+
+output {
+        elasticsearch {
+        hosts => "158.160.46.42"
+        index => "logstash-%{+YYYY.MM.dd}"
 ```
 
 *Приведите скриншот интерфейса Kibana, на котором видны логи Nginx.*
