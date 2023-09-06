@@ -116,7 +116,7 @@ output {
 ```
 
 Проверяем корректность настроек
-![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/ELK/elk3.1.png)
+![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/ELK/elk3.2.png)
 
 ---
 
