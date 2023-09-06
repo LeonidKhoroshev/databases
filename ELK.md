@@ -108,10 +108,11 @@ HTTP/%{NUMBER:http_version}\" %{NUMBER:response_code} %{NUMBER:body_sent_bytes}
     }
 }
 
+
 output {
-        elasticsearch {
-        hosts => "158.160.46.42"
-        index => "logstash-%{+YYYY.MM.dd}"
+  elasticsearch {
+  hosts => "51.250.82.167"
+  data_stream => "true"
 ```
 
 *Приведите скриншот интерфейса Kibana, на котором видны логи Nginx.*
