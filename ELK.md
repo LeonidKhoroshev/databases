@@ -115,7 +115,8 @@ output {
   data_stream => "true"
 ```
 
-*Приведите скриншот интерфейса Kibana, на котором видны логи Nginx.*
+Проверяем корректность настроек
+![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/ELK/elk3.1.png)
 
 ---
 
