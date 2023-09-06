@@ -133,42 +133,35 @@ systemctl start filebeat
 Проверяем, что установка прошла корректно
 ![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/ELK/elk4.1.png)
 
-Возвращаемся к настройкам logstash.conf в директории etc/logstash/conf.d (меняем секцию input для того, чтобы данные поступали от filebeat)
-
-```
-input {
-  beats {
-    port => 5044
-#  file {
-#    path => "/var/log/nginx/access.log"
-#    start_position => "beginning"
- }
-```
-
-Далее прописывает настройки filebeat в файле /etc/filebeat/filebeat.yml
+Прописываем настройки filebeat в файле /etc/filebeat/filebeat.yml
 
 ```
 filebeat.inputs:
 - type: log
   enabled: true
   paths:
-    - /var/log/nginx/access.log
-output.elasticsearch:
-  hosts: ["localhost:9200"]
-filebeat.config.modules:
-  path: ${path.config}/modules.d/*.yml
-  reload.enabled: false
-setup.template.settings:
-  index.number_of_shards: 1
+    - '/var/log/nginx/access.log'
+
 processors:
-  - add_host_metadata:
-      when.not.contains.tags: forwarded
-  - add_cloud_metadata: ~
-  - add_docker_metadata: ~
-  - add_kubernetes_metadata: ~
+- decode_json_fields:
+    fields: ["message"]
+    target: "json"
+    overwrite_keys: true
+
+output.elasticsearch:
+  hosts: ["51.250.82.167:9200"]
+  indices:
+    - index: "filebeat-nginx-%{[agent.version]}-%{+yyyy.MM.dd}"
+
+logging.json: true
+logging.metrics.enabled: false
 ```
 
-*Приведите скриншот интерфейса Kibana, на котором видны логи Nginx, которые были отправлены через Filebeat.*
+Смотрим в Kibana наличие нашего нового индекса
+![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/ELK/elk4.2.png)
+
+Проверяем наличие логов nginx
+![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/ELK/elk4.3.png)
 
 
 ## Дополнительные задания (со звёздочкой*)
