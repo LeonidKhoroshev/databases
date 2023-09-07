@@ -99,7 +99,7 @@ HTTP/%{NUMBER:http_version}\" %{NUMBER:response_code} %{NUMBER:body_sent_bytes}
 
 output {
   elasticsearch {
-  hosts => "51.250.82.167"
+  hosts => "localhost:9200"
   data_stream => "true"
 ```
 
@@ -142,7 +142,7 @@ processors:
     overwrite_keys: true
 
 output.elasticsearch:
-  hosts: ["51.250.82.167:9200"]
+  hosts: ["localhost:9200"]
   indices:
     - index: "filebeat-nginx-%{[agent.version]}-%{+yyyy.MM.dd}"
 
