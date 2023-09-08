@@ -178,7 +178,8 @@ suricata-update
 ```
 nano /etc/suricata/suricata.yaml
 ```
-Меняем значение параметра EXTERNAL_NET на "any" путем раскомментирования соответствующей строки.
+Меняем значение параметра EXTERNAL_NET на "any" путем раскомментирования соответствующей строки
+![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/ELK/elk5.2.png)
 
 Прописываем правила и запускаем утилиту
 ```
