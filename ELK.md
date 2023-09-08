@@ -174,4 +174,17 @@ apt install suricata
 suricata-update
 ```
 
-*Приведите скриншот интерфейса Kibana, на котором будет виден этот лог и напишите лог какого приложения отправляется.*
+2. Настройка Suricata
+```
+nano /etc/suricata/suricata.yaml
+```
+Меняем значение параметра EXTERNAL_NET на "any" путем раскомментирования соответствующей строки.
+
+Прописываем правила и запускаем утилиту
+```
+sudo suricata-update -o /etc/suricata/rules
+systemctl start suricata
+systemctl status suricata
+```
+![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/ELK/elk5.1.png)
+
