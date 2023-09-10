@@ -189,3 +189,32 @@ systemctl status suricata
 ```
 ![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/ELK/elk5.1.png)
 
+3. Донастройка службы filebeat
+
+Добавляем возможность загрузки модулей, для этого корректируем файл filebeat.yml
+
+```
+nano /etc/filebeat/filebeat.yml
+```
+
+В дополнение к коду, прописанному в рамках выполнения Задания 4 дописываем раздел
+
+```
+filebeat.config.modules:
+  enabled: true
+  path: ${path.config}/modules.d/*.yml
+```
+Далее загружаем необходимый модуль (в нашем случае suricata)
+
+```
+filebeat modules enable suricata
+filebeat setup -e
+```
+Перезапускаем службы
+```
+systemctl restart elasticsearch
+systemctl restart kibana
+```
+4. Проверяем интерфейс в kibana
+![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/ELK/elk5.3.png)
+
