@@ -210,6 +210,25 @@ filebeat.config.modules:
 filebeat modules enable suricata
 filebeat setup -e
 ```
+Корректируем модуль, указав путь до файла 
+```
+nano /etc/filebeat/modules.d/suricata.yml
+```
+
+```
+# Module: suricata
+# Docs: https://www.elastic.co/guide/en/beats/filebeat/8.6/filebeat-module-suricata.html
+
+- module: suricata
+  # All logs
+  eve:
+    enabled: false
+
+    # Set custom paths for the log files. If left empty,
+    # Filebeat will choose the paths depending on your OS.
+    var.paths: ["/var/log/suricata/eve.json"]
+```
+
 Перезапускаем службы
 ```
 systemctl restart elasticsearch
