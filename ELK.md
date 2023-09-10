@@ -189,44 +189,31 @@ systemctl status suricata
 ```
 ![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/ELK/elk5.1.png)
 
-3. Донастройка службы filebeat
+3. Корректировка конфигурации filebeat
 
-Добавляем возможность загрузки модулей, для этого корректируем файл filebeat.yml
 
-```
-nano /etc/filebeat/filebeat.yml
-```
-
-В дополнение к коду, прописанному в рамках выполнения Задания 4 дописываем раздел
+В дополнение к коду, прописанному в рамках выполнения Задания 4 дописываем индекс filebeat-suricata
 
 ```
-filebeat.config.modules:
+filebeat.inputs:
+- type: log
   enabled: true
-  path: ${path.config}/modules.d/*.yml
-```
-Далее загружаем необходимый модуль (в нашем случае suricata)
+  paths:
+#    - '/var/log/nginx/access.log'
+    - '/var/log/suricata/eve.json'
 
-```
-filebeat modules enable suricata
-filebeat setup -e
-```
-Корректируем модуль, указав путь до файла 
-```
-nano /etc/filebeat/modules.d/suricata.yml
-```
+processors:
+- decode_json_fields:
+    fields: ["message"]
+    target: "json"
+    overwrite_keys: true
 
-```
-# Module: suricata
-# Docs: https://www.elastic.co/guide/en/beats/filebeat/8.6/filebeat-module-suricata.html
+output.elasticsearch:
+  hosts: ["localhost:9200"]
+  indices:
+#    - index: "filebeat-nginx-%{[agent.version]}-%{+yyyy.MM.dd}"
+    - index: "filebeat-suricata"
 
-- module: suricata
-  # All logs
-  eve:
-    enabled: false
-
-    # Set custom paths for the log files. If left empty,
-    # Filebeat will choose the paths depending on your OS.
-    var.paths: ["/var/log/suricata/eve.json"]
 ```
 
 Перезапускаем службы
@@ -234,6 +221,8 @@ nano /etc/filebeat/modules.d/suricata.yml
 systemctl restart elasticsearch
 systemctl restart kibana
 ```
+
 4. Проверяем интерфейс в kibana
 ![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/ELK/elk5.3.png)
-
+![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/ELK/elk5.4.png)
+![alt text](https://github.com/LeonidKhoroshev/databases/blob/main/ELK/elk5.5.png)
